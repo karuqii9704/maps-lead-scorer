@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Pengaturan Maps Lead Scorer</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; padding: 40px 16px; color: #f4f6fb;
+      font: 15px/1.55 "Segoe UI Variable Text", "Segoe UI", Inter, Roboto, system-ui, sans-serif;
+      background: #10141e;
+    }
+    main {
+      max-width: 600px; margin: 0 auto; padding: 28px;
+      background: #181d2a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px;
+    }
+    h1 { margin: 0 0 4px; font-size: 22px; font-weight: 650; }
+    h2 { margin: 28px 0 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8ab4ff; }
+    label.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    input[type="number"], textarea {
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 10px; background: rgba(0, 0, 0, 0.25); color: inherit;
+    }
+    input[type="number"] { width: 76px; height: 34px; padding: 0 10px; font: inherit; font-variant-numeric: tabular-nums; }
+    textarea { width: 100%; height: 220px; padding: 10px 12px; font: 13px/1.5 ui-monospace, Consolas, monospace; resize: vertical; }
+    input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 2px; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 20px; }
+    button {
+      height: 38px; padding: 0 18px; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08); color: inherit; font: inherit; font-weight: 550; cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+    }
+    button:hover { background: rgba(255, 255, 255, 0.16); }
+    button:active { transform: scale(0.97); }
+    #save { border-color: transparent; background: #8ab4ff; color: #0b1530; }
+    #save:hover { background: #a6c6ff; }
+    #status { color: #6ee7a8; }
+    p.note { margin: 8px 0; color: rgba(226, 232, 245, 0.72); font-size: 13px; }
+    @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Pengaturan Maps Lead Scorer</h1>
+
+  <h2>Bobot skor (poin)</h2>
+  <div id="weights"></div>
+  <p class="note">Bisnis yang tutup permanen atau sementara selalu mendapat skor 0. Skor maksimal 100.</p>
+
+  <h2>Host media sosial / link-in-bio</h2>
+  <p class="note">Satu host per baris. Website dengan host ini dihitung "hanya media sosial".</p>
+  <textarea id="hosts" spellcheck="false"></textarea>
+
+  <div class="actions">
+    <button id="save">Simpan</button>
+    <button id="reset">Kembalikan ke default</button>
+    <span id="status"></span>
+  </div>
+
+</main>
+
+  <script src="src/selectors.js"></script>
+  <script src="src/extract.js"></script>
+  <script src="src/score.js"></script>
+  <script src="src/options.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Maps Lead Scorer",
+  "version": "1.0.0",
+  "description": "Memberi skor calon pelanggan dari daftar hasil pencarian Google Maps yang sedang Anda lihat. Untuk pemakaian pribadi.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/maps/*"],
+      "js": ["src/selectors.js", "src/extract.js", "src/score.js", "src/csv.js", "src/content.js"],
+      "css": ["src/panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}
