@@ -10,8 +10,17 @@ const X = require('../src/extract.js');
 
 const LIMITS = { maxResults: 60, defaultResults: 20 };
 const HL = (process.env.MLS_HL || 'id').trim() || 'id';
-// Default headful: headless Chrome gets a reduced Maps layout without review counts. MLS_HEADLESS=true opts in.
-const HEADLESS = /^(true|1|yes)$/i.test(process.env.MLS_HEADLESS || '');
+// MLS_HEADLESS=true|false overrides. Auto: headful only when a display exists (Windows, macOS, or Linux with
+// DISPLAY / WAYLAND_DISPLAY), else headless. Headless Chrome gets a reduced Maps layout without review counts,
+// so on a VPS run under xvfb-run -a. The user agent is never changed.
+function resolveHeadless(env, platform) {
+  const v = String(env.MLS_HEADLESS || '').trim().toLowerCase();
+  if (/^(true|1|yes)$/.test(v)) return true;
+  if (/^(false|0|no)$/.test(v)) return false;
+  if (platform === 'win32' || platform === 'darwin') return false;
+  return !(env.DISPLAY || env.WAYLAND_DISPLAY);
+}
+const HEADLESS = resolveHeadless(process.env, process.platform);
 
 class BlockedError extends Error {
   constructor(message) {
@@ -55,7 +64,8 @@ async function launch() {
   let lastErr;
   for (const extra of [{ channel: 'chrome' }, {}]) {
     try {
-      return await chromium.launch(Object.assign({ headless: HEADLESS }, extra));
+      const args = process.platform === 'linux' ? ['--disable-dev-shm-usage'] : [];
+      return await chromium.launch(Object.assign({ headless: HEADLESS, args }, extra));
     } catch (e) {
       lastErr = e;
     }
@@ -298,4 +308,4 @@ function getPlace(mapsUrl, progress = () => {}) {
   });
 }
 
-module.exports = { searchLeads, getPlace, closeBrowser, validateMapsUrl, BlockedError, LIMITS, HEADLESS };
+module.exports = { searchLeads, getPlace, closeBrowser, validateMapsUrl, BlockedError, LIMITS, HEADLESS, resolveHeadless };

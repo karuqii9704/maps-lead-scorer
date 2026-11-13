@@ -1,7 +1,7 @@
 {
   "name": "maps-lead-scorer",
   "version": "1.0.0",
-  "description": "Score Google Maps business listings as sales leads (Indonesian SMB outreach). Chrome extension plus an MCP server that lets AI agents run lead searches.",
+  "description": "Score Google Maps business listings as sales leads (Indonesian SMB outreach). Chrome extension plus an MCP server (stdio and Streamable HTTP) for AI agents.",
   "license": "MIT",
   "bin": {
     "maps-lead-scorer-mcp": "mcp/server.js"
@@ -13,7 +13,7 @@
     "LICENSE"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "test": "node --test",
@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
-    "playwright": "^1.65.0",
+    "playwright": "1.65.0",
     "zod": "^4.6.7"
   }
 }

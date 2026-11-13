@@ -1,0 +1,7 @@
+node_modules/
+.git/
+.mcp.json
+leads-*.csv
+*.log
+Dockerfile
+.dockerignore
